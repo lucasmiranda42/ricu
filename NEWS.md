@@ -1,3 +1,18 @@
+# ricu 0.6.4
+
+* MIMIC-IV (`miiv`) updated from version 2.2 to 3.1
+  - Adds data from 2020-2022 (new anchor_year_group: "2020 - 2022")
+  - ~27% increase in patient data (364,627 patients, 546,028 admissions, 94,458 ICU stays)
+  - itemid values in d_labitems/labevents are consistent with v2.2 (no concept mapping changes needed)
+  - No schema changes from v2.2
+
+* SICdb (`sic`) updated from version 1.0.6 to 1.0.8
+  - 36 invalid cases removed (27,350 ICU admissions)
+  - New columns in `cases` table: HospitalDischargeDay, HospitalStayDays, AdmissionUrgency
+  - New LOINC mapping columns in `d_references` table: LOINC_code, LOINC_short, LOINC_long
+  - New signals in data_float_h: HFNC therapy, RASS, NRS-11, SOFA score
+  - Fixed OffsetAfterFirstAdmission calculation
+
 # ricu 0.6.3
 
 * Docs only update

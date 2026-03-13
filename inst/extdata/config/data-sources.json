@@ -7039,7 +7039,7 @@
   },
   {
     "name": "miiv",
-    "url": "https://physionet.org/files/mimiciv/2.2",
+    "url": "https://physionet.org/files/mimiciv/3.1",
     "id_cfg": {
       "patient": {
         "id": "subject_id",
@@ -7070,7 +7070,7 @@
           "val_var": "admission_type",
           "time_vars": ["admittime", "dischtime", "deathtime", "edregtime", "edouttime"]
         },
-        "num_rows": 431231,
+        "num_rows": 546028,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7148,7 +7148,7 @@
         "defaults": {
           "time_vars": "dod"
         },
-        "num_rows": 299712,
+        "num_rows": 364627,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7182,7 +7182,7 @@
         "defaults": {
           "time_vars": ["intime", "outtime"]
         },
-        "num_rows": 1890972,
+        "num_rows": 2413581,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7222,7 +7222,7 @@
           "id_var": "code",
           "val_var": "short_description"
         },
-        "num_rows": 89200,
+        "num_rows": 89208,
         "cols": {
           "code": {
             "name": "code",
@@ -7247,7 +7247,7 @@
         "defaults": {
           "val_var": "icd_code"
         },
-        "num_rows": 4756326,
+        "num_rows": 6364488,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7277,7 +7277,7 @@
           "id_var": "icd_code",
           "val_var": "long_title"
         },
-        "num_rows": 109775,
+        "num_rows": 112107,
         "cols": {
           "icd_code": {
             "name": "icd_code",
@@ -7299,7 +7299,7 @@
           "id_var": "icd_code",
           "val_var": "long_title"
         },
-        "num_rows": 85257,
+        "num_rows": 86423,
         "cols": {
           "icd_code": {
             "name": "icd_code",
@@ -7321,7 +7321,7 @@
           "id_var": "itemid",
           "val_var": "label"
         },
-        "num_rows": 1622,
+        "num_rows": 1650,
         "cols": {
           "itemid": {
             "name": "itemid",
@@ -7350,7 +7350,7 @@
         "defaults": {
           "val_var": "drg_code"
         },
-        "num_rows": 604377,
+        "num_rows": 761856,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7387,7 +7387,7 @@
         "defaults": {
           "id_var": "emar_id"
         },
-        "num_rows": 54744789,
+        "num_rows": 87371064,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7529,7 +7529,7 @@
           "index_var": "charttime",
           "time_vars": ["charttime", "scheduletime", "storetime"]
         },
-        "num_rows": 26850359,
+        "num_rows": 42808593,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7590,7 +7590,7 @@
           "index_var": "chartdate",
           "time_vars": "chartdate"
         },
-        "num_rows": 150771,
+        "num_rows": 186074,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7627,7 +7627,7 @@
           "unit_var": "valueuom",
           "time_vars": ["charttime", "storetime"]
         },
-        "num_rows": 118171367,
+        "num_rows": 158374764,
         "cols": {
           "labevent_id": {
             "name": "labevent_id",
@@ -7708,7 +7708,7 @@
           "val_var": "isolate_num",
           "time_vars": ["chartdate", "charttime", "storedate", "storetime"]
         },
-        "num_rows": 3228713,
+        "num_rows": 3988224,
         "cols": {
           "microevent_id": {
             "name": "microevent_id",
@@ -7825,7 +7825,7 @@
           "unit_var": "duration_interval",
           "time_vars": ["starttime", "stoptime", "entertime", "verifiedtime", "expirationdate"]
         },
-        "num_rows": 13584514,
+        "num_rows": 17847567,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -7947,7 +7947,7 @@
         "defaults": {
           "id_var": "poe_id"
         },
-        "num_rows": 3879418,
+        "num_rows": 8504982,
         "cols": {
           "poe_id": {
             "name": "poe_id",
@@ -7977,7 +7977,7 @@
           "index_var": "ordertime",
           "time_vars": "ordertime"
         },
-        "num_rows": 39366291,
+        "num_rows": 52212109,
         "cols": {
           "poe_id": {
             "name": "poe_id",
@@ -8042,7 +8042,7 @@
           "unit_var": "dose_unit_rx",
           "time_vars": ["starttime", "stoptime"]
         },
-        "num_rows": 15416708,
+        "num_rows": 20292611,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8131,7 +8131,7 @@
           "val_var": "icd_code",
           "time_vars": "chartdate"
         },
-        "num_rows": 669186,
+        "num_rows": 859655,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8167,7 +8167,7 @@
           "val_var": "curr_service",
           "time_vars": "transfertime"
         },
-        "num_rows": 468029,
+        "num_rows": 593071,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8200,7 +8200,7 @@
           "unit_var": "valueuom",
           "time_vars": ["charttime", "storetime"]
         },
-        "num_rows": 313645063,
+        "num_rows": 432997491,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8261,7 +8261,7 @@
           "val_var": "itemid",
           "time_vars": ["charttime", "storetime", "value"]
         },
-        "num_rows": 7112999,
+        "num_rows": 9979761,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8314,7 +8314,7 @@
           "id_var": "itemid",
           "val_var": "label"
         },
-        "num_rows": 4014,
+        "num_rows": 4095,
         "cols": {
           "itemid": {
             "name": "itemid",
@@ -8361,7 +8361,7 @@
           "val_var": "last_careunit",
           "time_vars": ["intime", "outtime"]
         },
-        "num_rows": 73181,
+        "num_rows": 94458,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8407,7 +8407,7 @@
           "unit_var": "rateuom",
           "time_vars": ["starttime", "endtime", "storetime"]
         },
-        "num_rows": 8978893,
+        "num_rows": 10953713,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8530,7 +8530,7 @@
           "unit_var": "valueuom",
           "time_vars": ["charttime", "storetime"]
         },
-        "num_rows": 4234967,
+        "num_rows": 5359395,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8580,7 +8580,7 @@
           "unit_var": "valueuom",
           "time_vars": ["starttime", "endtime", "storetime", "comments_date"]
         },
-        "num_rows": 696092,
+        "num_rows": 808706,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8703,7 +8703,7 @@
           "val_var": "result_value",
           "time_vars": "chartdate"
         },
-        "num_rows": 6439169,
+        "num_rows": 7753027,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -8731,7 +8731,7 @@
       "caregiver": {
         "files": "icu/caregiver.csv.gz",
         "defaults": [],
-        "num_rows": 15468,
+        "num_rows": 19967,
         "cols": {
           "caregiver_id": {
             "name": "caregiver_id",
@@ -8742,7 +8742,7 @@
       "provider": {
         "files": "hosp/provider.csv.gz",
         "defaults": [],
-        "num_rows": 40508,
+        "num_rows": 51312,
         "cols": {
           "provider_id": {
             "name": "provider_id",
@@ -8758,7 +8758,7 @@
           "unit_var": "rateuom",
           "time_vars": ["starttime", "endtime", "storetime"]
         },
-        "num_rows": 11627821,
+        "num_rows": 15014686,
         "cols": {
           "subject_id": {
             "name": "subject_id",
@@ -9573,7 +9573,7 @@
   },
   {
     "name": "sic",
-    "url": "https://physionet.org/files/sicdb/1.0.6",
+    "url": "https://physionet.org/files/sicdb/1.0.8",
     "id_cfg": {
       "patient": {
         "id": "PatientID",
@@ -9597,7 +9597,7 @@
           "index_var": "ICUOffset",
           "time_vars": ["ICUOffset", "OffsetOfDeath", "HeartSurgeryBeginOffset", "HeartSurgeryEndOffset", "OffsetAfterFirstAdmission"]
         },
-        "num_rows": 27386,
+        "num_rows": 27350,
         "cols": {
           "caseid": {
             "name": "CaseID",
@@ -9625,6 +9625,14 @@
           },
           "hospitaldischargetype": {
             "name": "HospitalDischargeType",
+            "spec": "col_integer"
+          },
+          "hospitaldischargeday": {
+            "name": "HospitalDischargeDay",
+            "spec": "col_integer"
+          },
+          "hospitalstaydays": {
+            "name": "HospitalStayDays",
             "spec": "col_integer"
           },
           "dischargestate": {
@@ -9665,6 +9673,10 @@
           },
           "referringunit": {
             "name": "ReferringUnit",
+            "spec": "col_integer"
+          },
+          "admissionurgency": {
+            "name": "AdmissionUrgency",
             "spec": "col_integer"
           },
           "icd10main": {
@@ -9752,6 +9764,18 @@
           },
           "data": {
             "name": "Data",
+            "spec": "col_character"
+          },
+          "loinc_code": {
+            "name": "LOINC_code",
+            "spec": "col_character"
+          },
+          "loinc_short": {
+            "name": "LOINC_short",
+            "spec": "col_character"
+          },
+          "loinc_long": {
+            "name": "LOINC_long",
             "spec": "col_character"
           }
         }
