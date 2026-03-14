@@ -12,6 +12,7 @@
   - New LOINC mapping columns in `d_references` table: LOINC_code, LOINC_short, LOINC_long
   - New signals in data_float_h: HFNC therapy, RASS, NRS-11, SOFA score
   - Fixed OffsetAfterFirstAdmission calculation
+  - Fixed `data_ref` table: added missing FieldID column, removed invalid index_var
 
 # ricu 0.6.3
 

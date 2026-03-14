@@ -9825,9 +9825,7 @@
       },
       "data_ref": {
         "files": "data_ref.csv.gz",
-        "defaults": {
-          "index_var": "OffsetAfterFirstAdmission"
-        },
+        "defaults": [],
         "num_rows": 354157,
         "cols": {
           "id": {
@@ -9840,6 +9838,10 @@
           },
           "refid": {
             "name": "RefID",
+            "spec": "col_integer"
+          },
+          "fieldid": {
+            "name": "FieldID",
             "spec": "col_integer"
           },
           "customfieldid": {
