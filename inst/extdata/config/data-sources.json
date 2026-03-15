@@ -9732,7 +9732,7 @@
       "d_references": {
         "files": "d_references.csv.gz",
         "defaults": [],
-        "num_rows": 1608,
+        "num_rows": 1622,
         "cols": {
           "referenceglobalid": {
             "name": "ReferenceGlobalID",
@@ -9826,7 +9826,7 @@
       "data_ref": {
         "files": "data_ref.csv.gz",
         "defaults": [],
-        "num_rows": 354157,
+        "num_rows": 381057,
         "cols": {
           "id": {
             "name": "id",
@@ -9857,7 +9857,7 @@
           "val_var": "LaboratoryValue",
           "time_vars": "Offset"
         },
-        "num_rows": 17572279,
+        "num_rows": 17881172,
         "cols": {
           "id": {
             "name": "id",
@@ -9892,7 +9892,7 @@
           "val_var": "Amount",
           "time_vars": ["Offset", "OffsetDrugEnd"]
         },
-        "num_rows": 5141346,
+        "num_rows": 5141127,
         "cols": {
           "id": {
             "name": "id",
