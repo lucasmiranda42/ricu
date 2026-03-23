@@ -253,6 +253,14 @@
       ]
     }
   },
+  "surg": {
+    "concepts": "adm",
+    "target": "id_tbl",
+    "description": "surgical admission indicator",
+    "category": "demographics",
+    "callback": "surg_flag",
+    "class": "rec_cncpt"
+  },
   "age": {
     "unit": "years",
     "min": 0,

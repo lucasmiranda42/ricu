@@ -600,6 +600,16 @@ avpu <- function(..., interval = NULL) {
 
 #' @rdname callback_cncpt
 #' @export
+surg_flag <- function(..., interval = NULL) {
+
+  res <- collect_dots("adm", interval, ...)
+  res <- res[, c("surg", "adm") := list(get("adm") == "surg", NULL)]
+
+  res
+}
+
+#' @rdname callback_cncpt
+#' @export
 bmi <- function(..., interval = NULL) {
 
   cnc <- c("weight", "height")
