@@ -203,9 +203,11 @@ import_tbl.default <- function(x, ...) stop_generic(x, .Generic)
 merge_fst_chunks <- function(src, targ, new, old, sort_col, prog, nme, tick) {
 
   files <- list.files(src, full.names = TRUE)
+  part_no <- sub("part_", "", basename(src))
 
   # Skip empty partitions (no data rows fell into this partition range)
   if (length(files) == 0L) {
+    progress_tick(paste(nme, "part", part_no, "(empty)"), prog, coalesce(tick, 1L))
     return(invisible(NULL))
   }
 
@@ -218,7 +220,6 @@ merge_fst_chunks <- function(src, targ, new, old, sort_col, prog, nme, tick) {
   dat <- setorderv(dat, sort_col)
   dat <- rename_cols(dat, new, old)
 
-  part_no  <- sub("part_", "", basename(src))
   new_file <- file.path(ensure_dirs(targ), paste0(part_no, ".fst"))
 
   fst::write_fst(dat, new_file, compress = 100L)
