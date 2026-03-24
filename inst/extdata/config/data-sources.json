@@ -9815,7 +9815,7 @@
           },
           "rawdata": {
             "name": "rawdata",
-            "spec": "col_double"
+            "spec": "col_character"
           }
         },
         "partitioning": {
