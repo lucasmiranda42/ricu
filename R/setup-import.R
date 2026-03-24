@@ -204,6 +204,11 @@ merge_fst_chunks <- function(src, targ, new, old, sort_col, prog, nme, tick) {
 
   files <- list.files(src, full.names = TRUE)
 
+  # Skip empty partitions (no data rows fell into this partition range)
+  if (length(files) == 0L) {
+    return(invisible(NULL))
+  }
+
   sort_ind <- order(
     as.integer(sub("^chunk_", "", sub("\\.fst$", "", basename(files))))
   )
