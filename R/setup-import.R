@@ -200,15 +200,21 @@ import_tbl.tbl_cfg <- function(x, data_dir = src_data_dir(x), progress = NULL,
 #' @export
 import_tbl.default <- function(x, ...) stop_generic(x, .Generic)
 
-merge_fst_chunks <- function(src, targ, new, old, sort_col, prog, nme, tick) {
+merge_fst_chunks <- function(src, targ, new, old, sort_col, prog, nme, tick,
+                             template = NULL) {
 
   files <- list.files(src, full.names = TRUE)
   part_no <- sub("part_", "", basename(src))
+  new_file <- file.path(ensure_dirs(targ), paste0(part_no, ".fst"))
 
-  # Skip empty partitions (no data rows fell into this partition range)
+  # Handle empty partitions (no data rows fell into this partition range)
   if (length(files) == 0L) {
-    progress_tick(paste(nme, "part", part_no, "(empty)"), prog, coalesce(tick, 1L))
-    return(invisible(NULL))
+    if (!is.null(template)) {
+      # Write empty file with correct column types
+      fst::write_fst(template, new_file, compress = 100L)
+      progress_tick(paste(nme, "part", part_no, "(empty)"), prog, coalesce(tick, 1L))
+    }
+    return(list(part_no = part_no, file = new_file, empty = TRUE, template = NULL))
   }
 
   sort_ind <- order(
@@ -220,14 +226,12 @@ merge_fst_chunks <- function(src, targ, new, old, sort_col, prog, nme, tick) {
   dat <- setorderv(dat, sort_col)
   dat <- rename_cols(dat, new, old)
 
-  new_file <- file.path(ensure_dirs(targ), paste0(part_no, ".fst"))
-
   fst::write_fst(dat, new_file, compress = 100L)
 
   progress_tick(paste(nme, "part", part_no), prog,
                 coalesce(tick, floor(nrow(dat) / 2)))
 
-  invisible(NULL)
+  list(part_no = part_no, file = new_file, empty = FALSE, template = dat[0L])
 }
 
 split_write <- function(x, part_fun, dir, chunk_no, prog, nme, tick) {
@@ -309,8 +313,28 @@ partition_table <- function(x, dir, progress = NULL, chunk_length = 10 ^ 7,
     tick <- 1L
   }
 
-  for (src_dir in file.path(tempdir, paste0("part_", seq_len(n_part(x))))) {
-    merge_fst_chunks(src_dir, targ, newc, oldc, pcol, progress, name, tick)
+  part_dirs <- file.path(tempdir, paste0("part_", seq_len(n_part(x))))
+  
+  # First pass: identify empty vs non-empty partitions
+  non_empty_dirs <- part_dirs[vapply(part_dirs, function(d) {
+    length(list.files(d)) > 0L
+  }, logical(1L))]
+  
+  empty_dirs <- setdiff(part_dirs, non_empty_dirs)
+  
+  # Process non-empty partitions first (to get template)
+  template <- NULL
+  for (src_dir in non_empty_dirs) {
+    res <- merge_fst_chunks(src_dir, targ, newc, oldc, pcol, progress, name, tick)
+    if (is.null(template) && !is.null(res$template)) {
+      template <- res$template
+    }
+  }
+  
+  # Process empty partitions with template
+  for (src_dir in empty_dirs) {
+    merge_fst_chunks(src_dir, targ, newc, oldc, pcol, progress, name, tick,
+                     template = template)
   }
 
   if (is.null(tick)) {

@@ -104,7 +104,7 @@
         {
           "ids": [1406, 1408, 1410, 1418, 1421, 1422, 1423, 1428, 1431, 1433, 1436, 1449, 1454, 1457, 1458, 1459, 1460, 1461, 1603, 1795, 1913, 1927],
           "table": "medication",
-          "sub_var": "DrugID",
+          "sub_var": "drugid",
           "callback": "transform_fun(set_val(TRUE))"
         }
       ]
@@ -327,7 +327,7 @@
       "sic": [
         {
           "table": "cases",
-          "val_var": "AgeOnAdmission",
+          "val_var": "ageonadmission",
           "class": "col_itm"
         }
       ]
@@ -397,7 +397,7 @@
         {
           "ids": 287,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -463,7 +463,7 @@
         {
           "ids": 609,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -529,7 +529,7 @@
         {
           "ids": 617,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -595,7 +595,7 @@
         {
           "ids": 616,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -668,7 +668,7 @@
         {
           "ids": 174,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -737,7 +737,7 @@
         {
           "ids": 668,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -804,7 +804,7 @@
         {
           "ids": [451, 456, 666, 667],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -873,7 +873,7 @@
         {
           "ids": 333,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -942,7 +942,7 @@
         {
           "ids": 332,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -1078,7 +1078,7 @@
         {
           "ids": 355,
           "table": "laboratory",
-          "sub_var": "LaboratoryID",
+          "sub_var": "laboratoryid",
           "callback": "transform_fun(binary_op(`*`, 0.467))"
         }
       ]
@@ -1150,7 +1150,7 @@
         {
           "ids": 457,
           "table": "laboratory",
-          "sub_var": "LaboratoryID",
+          "sub_var": "laboratoryid",
           "callback": "transform_fun(binary_op(`*`, 4.008))"
         }
       ]
@@ -1218,7 +1218,7 @@
         {
           "ids": 655,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -1284,7 +1284,7 @@
         {
           "ids": 611,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -1350,7 +1350,7 @@
         {
           "ids": 253,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -1417,7 +1417,7 @@
         {
           "ids": [683, 450],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -1510,7 +1510,7 @@
         {
           "ids": 367,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -1641,7 +1641,7 @@
         {
           "ids": [702, 705],
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -1932,8 +1932,8 @@
             1559
           ],
           "table": "medication",
-          "sub_var": "DrugID",
-          "stop_var": "OffsetDrugEnd",
+          "sub_var": "drugid",
+          "stop_var": "offsetdrugend",
           "callback": "sic_dur"
         }
       ]
@@ -2032,9 +2032,9 @@
         {
           "ids": 1559,
           "table": "medication",
-          "sub_var": "DrugID",
-          "val_var": "AmountPerMinute",
-          "stop_var": "OffsetDrugEnd",
+          "sub_var": "drugid",
+          "val_var": "amountperminute",
+          "stop_var": "offsetdrugend",
           "callback": "sic_rate_kg"
         }
       ]
@@ -2129,8 +2129,8 @@
         {
           "ids": 1618,
           "table": "medication",
-          "sub_var": "DrugID",
-          "stop_var": "OffsetDrugEnd",
+          "sub_var": "drugid",
+          "stop_var": "offsetdrugend",
           "callback": "sic_dur"
         }
       ]
@@ -2220,9 +2220,9 @@
         {
           "ids": 1618,
           "table": "medication",
-          "sub_var": "DrugID",
-          "val_var": "AmountPerMinute",
-          "stop_var": "OffsetDrugEnd",
+          "sub_var": "drugid",
+          "val_var": "amountperminute",
+          "stop_var": "offsetdrugend",
           "callback": "sic_rate_kg"
         }
       ]
@@ -2362,7 +2362,7 @@
         {
           "ids": 197,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -2459,8 +2459,8 @@
             1502
           ],
           "table": "medication",
-          "sub_var": "DrugID",
-          "stop_var": "OffsetDrugEnd",
+          "sub_var": "drugid",
+          "stop_var": "offsetdrugend",
           "callback": "sic_dur"
         }
       ]
@@ -2559,9 +2559,9 @@
         {
           "ids": 1502,
           "table": "medication",
-          "sub_var": "DrugID",
-          "val_var": "AmountPerMinute",
-          "stop_var": "OffsetDrugEnd",
+          "sub_var": "drugid",
+          "val_var": "amountperminute",
+          "stop_var": "offsetdrugend",
           "callback": "sic_rate_kg"
         }
       ]
@@ -2795,7 +2795,7 @@
         {
           "ids": 344,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -2891,7 +2891,7 @@
         {
           "ids": 2283,
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -2979,7 +2979,7 @@
         {
           "ids": [348, 656],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -3111,7 +3111,7 @@
         {
           "ids": [217, 682],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -3182,7 +3182,7 @@
       "sic": [
         {
           "table": "cases",
-          "val_var": "HeightOnAdmission",
+          "val_var": "heightonadmission",
           "class": "col_itm"
         }
       ]
@@ -3252,7 +3252,7 @@
         {
           "ids": [658, 289],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -3319,7 +3319,7 @@
         {
           "ids": 708,
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -3523,7 +3523,7 @@
         {
           "ids": [463, 685],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -3590,7 +3590,7 @@
         {
           "ids": [657, 454],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -3767,7 +3767,7 @@
         {
           "ids": 223,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -3844,7 +3844,7 @@
         {
           "ids": [703, 706],
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -3911,7 +3911,7 @@
         {
           "ids": 566,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -3980,7 +3980,7 @@
         {
           "ids": 290,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -4047,7 +4047,7 @@
         {
           "ids": 286,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -4225,7 +4225,7 @@
         {
           "ids": 468,
           "table": "laboratory",
-          "sub_var": "LaboratoryID",
+          "sub_var": "laboratoryid",
           "callback": "transform_fun(binary_op(`*`, 2.431))"
         }
       ]
@@ -4359,7 +4359,7 @@
         {
           "ids": [469, 686],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -4432,7 +4432,7 @@
         {
           "ids": 230,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -4537,8 +4537,8 @@
             1562
           ],
           "table": "medication",
-          "sub_var": "DrugID",
-          "stop_var": "OffsetDrugEnd",
+          "sub_var": "drugid",
+          "stop_var": "offsetdrugend",
           "callback": "sic_dur"
         }
       ]
@@ -4644,9 +4644,9 @@
         {
           "ids": 1562,
           "table": "medication",
-          "sub_var": "DrugID",
-          "val_var": "AmountPerMinute",
-          "stop_var": "OffsetDrugEnd",
+          "sub_var": "drugid",
+          "val_var": "amountperminute",
+          "stop_var": "offsetdrugend",
           "callback": "sic_rate_kg"
         }
       ]
@@ -4755,12 +4755,12 @@
         {
           "ids": 710,
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         },
         {
           "ids": [184, 673, 690],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -4836,7 +4836,7 @@
         {
           "ids": 687,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -4902,7 +4902,7 @@
         {
           "ids": 688,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -5054,7 +5054,7 @@
         {
           "ids": 471,
           "table": "laboratory",
-          "sub_var": "LaboratoryID",
+          "sub_var": "laboratoryid",
           "callback": "transform_fun(binary_op(`*`, 3.097521))"
         }
       ]
@@ -5122,7 +5122,7 @@
         {
           "ids": 314,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -5189,7 +5189,7 @@
         {
           "ids": [664, 689],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -5247,7 +5247,7 @@
         {
           "ids": 598,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -5313,7 +5313,7 @@
         {
           "ids": 597,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -5384,6 +5384,13 @@
           "table": "chartevents",
           "sub_var": "itemid"
         }
+      ],
+      "sic": [
+        {
+          "ids": 3123,
+          "table": "data_float_h",
+          "sub_var": "dataid"
+        }
       ]
     }
   },
@@ -5441,7 +5448,7 @@
         {
           "ids": 599,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -5500,7 +5507,7 @@
         {
           "ids": 3319,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -5567,7 +5574,7 @@
         {
           "ids": 719,
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -5717,7 +5724,7 @@
         {
           "ids": [184, 673, 690],
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -5784,7 +5791,7 @@
         {
           "ids": [701, 704],
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -6002,7 +6009,7 @@
         {
           "ids": 710,
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -6158,7 +6165,7 @@
         {
           "ids": 709,
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -6262,7 +6269,7 @@
         {
           "ids": 481,
           "table": "laboratory",
-          "sub_var": "LaboratoryID",
+          "sub_var": "laboratoryid",
           "callback": "transform_fun(binary_op(`/`, 1000))"
         }
       ]
@@ -6314,7 +6321,7 @@
         {
           "ids": 270,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -6395,7 +6402,7 @@
         {
           "ids": 725,
           "table": "data_float_h",
-          "sub_var": "DataID"
+          "sub_var": "dataid"
         }
       ]
     }
@@ -6693,7 +6700,7 @@
         {
           "ids": 301,
           "table": "laboratory",
-          "sub_var": "LaboratoryID"
+          "sub_var": "laboratoryid"
         }
       ]
     }
@@ -6761,9 +6768,57 @@
       "sic": [
         {
           "table": "cases",
-          "val_var": "WeightOnAdmission",
+          "val_var": "weightonadmission",
           "class": "col_itm",
           "callback": "transform_fun(binary_op(`/`, 1000))"
+        }
+      ]
+    }
+  },
+  "sofa_raw": {
+    "min": 0,
+    "max": 24,
+    "description": "pre-computed SOFA score (source-provided)",
+    "omopid": 1616852,
+    "category": "outcome",
+    "sources": {
+      "sic": [
+        {
+          "ids": 3139,
+          "table": "data_float_h",
+          "sub_var": "dataid"
+        }
+      ]
+    }
+  },
+  "hfnc": {
+    "class": "lgl_cncpt",
+    "description": "high-flow nasal cannula oxygen therapy",
+    "omopid": 4230167,
+    "category": "respiratory",
+    "sources": {
+      "sic": [
+        {
+          "ids": [3140, 3141, 3142, 3143],
+          "table": "data_float_h",
+          "sub_var": "dataid",
+          "callback": "transform_fun(set_val(TRUE))"
+        }
+      ]
+    }
+  },
+  "nrs11": {
+    "min": 0,
+    "max": 10,
+    "description": "Numeric Rating Scale for pain (0-10)",
+    "omopid": 4023720,
+    "category": "neurological",
+    "sources": {
+      "sic": [
+        {
+          "ids": 3122,
+          "table": "data_float_h",
+          "sub_var": "dataid"
         }
       ]
     }

@@ -43,7 +43,17 @@ progress_tick <- function(info = NULL, progress_bar = NULL, length = 1L) {
 
   assert_that(inherits(progress_bar, "progress_bar"))
 
+  # Skip if progress bar is already finished
+  if (isTRUE(progress_bar$finished)) {
+    return(invisible(NULL))
+  }
+
   old_token <- attr(progress_bar, "token")
+
+  # Safely tick (may overflow if tick count doesn't match exactly)
+  safe_tick <- function(...) {
+    tryCatch(progress_bar$tick(...), error = function(e) NULL)
+  }
 
   if (not_null(info)) {
 
@@ -59,15 +69,15 @@ progress_tick <- function(info = NULL, progress_bar = NULL, length = 1L) {
     attr(progress_bar, "header")   <- info
     attr(progress_bar, "messages") <- character(0L)
 
-    progress_bar$tick(len = length, tokens = list(what = token))
+    safe_tick(len = length, tokens = list(what = token))
 
   } else if (not_null(old_token)) {
 
-    progress_bar$tick(len = length, tokens = list(what = old_token))
+    safe_tick(len = length, tokens = list(what = old_token))
 
   } else {
 
-    progress_bar$tick(len = length)
+    safe_tick(len = length)
   }
 
   invisible(NULL)
