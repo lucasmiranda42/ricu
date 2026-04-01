@@ -1011,6 +1011,13 @@
           "table": "labevents",
           "sub_var": "itemid"
         }
+      ],
+      "sic": [
+        {
+          "ids": 240,
+          "table": "laboratory",
+          "sub_var": "laboratoryid"
+        }
       ]
     }
   },
@@ -1712,6 +1719,95 @@
           "index_var": "deathtime",
           "val_var": "hospital_expire_flag",
           "callback": "transform_fun(comp_na(`==`, 1L))",
+          "class": "col_itm"
+        }
+      ],
+      "sic": [
+        {
+          "table": "cases",
+          "index_var": "timeofstay",
+          "val_var": "dischargestate",
+          "callback": "transform_fun(comp_na(`==`, 2215L))",
+          "class": "col_itm"
+        }
+      ]
+    }
+  },
+  "death_icu": {
+    "class": "lgl_cncpt",
+    "description": "ICU mortality (death during ICU stay)",
+    "omopid": 4306655,
+    "category": "outcome",
+    "sources": {
+      "aumc": [
+        {
+          "table": "admissions",
+          "index_var": "dateofdeath",
+          "val_var": "dischargedat",
+          "callback": "aumc_death_icu",
+          "class": "col_itm"
+        }
+      ],
+      "eicu": [
+        {
+          "table": "patient",
+          "index_var": "unitdischargeoffset",
+          "val_var": "unitdischargestatus",
+          "callback": "transform_fun(comp_na(`==`, 'Expired'))",
+          "class": "col_itm"
+        }
+      ],
+      "eicu_demo": [
+        {
+          "table": "patient",
+          "index_var": "unitdischargeoffset",
+          "val_var": "unitdischargestatus",
+          "callback": "transform_fun(comp_na(`==`, 'Expired'))",
+          "class": "col_itm"
+        }
+      ],
+      "hirid": [
+        {
+          "ids": [110, 200],
+          "table": "observations",
+          "sub_var": "variableid",
+          "callback": "hirid_death",
+          "class": "hrd_itm"
+        }
+      ],
+      "miiv": [
+        {
+          "table": "icustays",
+          "index_var": "outtime",
+          "val_var": "los",
+          "callback": "miiv_death_icu",
+          "class": "col_itm"
+        }
+      ],
+      "mimic": [
+        {
+          "table": "icustays",
+          "index_var": "outtime",
+          "val_var": "los",
+          "callback": "mimic_death_icu",
+          "class": "col_itm"
+        }
+      ],
+      "mimic_demo": [
+        {
+          "table": "icustays",
+          "index_var": "outtime",
+          "val_var": "los",
+          "callback": "mimic_demo_death_icu",
+          "class": "col_itm"
+        }
+      ],
+      "sic": [
+        {
+          "table": "cases",
+          "index_var": "timeofstay",
+          "val_var": "dischargestate",
+          "callback": "transform_fun(comp_na(`==`, 2215L))",
           "class": "col_itm"
         }
       ]
@@ -5805,6 +5901,15 @@
     "keep_components": [false, true],
     "class": "rec_cncpt"
   },
+  "sep3_alt": {
+    "concepts": ["sofa", "susp_inf_abx"],
+    "description": "sepsis-3 criterion (antibiotics-only alternative)",
+    "omopid": 132797,
+    "category": "outcome",
+    "callback": "sep3_alt",
+    "keep_components": [false, true],
+    "class": "rec_cncpt"
+  },
   "sex": {
     "target": "id_tbl",
     "levels": ["Female", "Male"],
@@ -6036,6 +6141,14 @@
       ]
     ],
     "callback": "susp_inf",
+    "class": "rec_cncpt"
+  },
+  "susp_inf_abx": {
+    "concepts": ["abx"],
+    "description": "suspected infection (antibiotics-only)",
+    "omopid": 43021378,
+    "category": "outcome",
+    "callback": "susp_inf_abx",
     "class": "rec_cncpt"
   },
   "tco2": {

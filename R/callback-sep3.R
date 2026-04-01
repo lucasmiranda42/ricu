@@ -432,3 +432,169 @@ si_or <- function(abx, samp, abx_win, samp_win, keep) {
 
   res
 }
+
+#' Suspected infection (antibiotics-only)
+#'
+#' Alternative definition of suspected infection based solely on antibiotic
+#' administration. This is useful for datasets lacking microbiology/sampling
+#' data (e.g., HiRID, SIC).
+#'
+#' @param ... Data objects
+#' @param abx_count_win Time span during which to count antibiotic
+#' administrations
+#' @param abx_min_count Minimal number of antibiotic administrations required
+#' @param by_ref Logical flag indicating whether to process data by reference
+#' @param keep_components Logical flag indicating whether to return time
+#' components
+#' @param interval Time series interval (only used for checking consistency)
+#'
+#' @details Suspected infection is defined as administration of at least
+#' `abx_min_count` (default: 2) antibiotics within `abx_count_win` hours
+#' (default: 24). The first antibiotic administration time is taken as the
+#' suspected infection (SI) time.
+#'
+#' This alternative definition is used when body fluid sampling data is not
+#' available in the dataset.
+#'
+#' @references
+#' Singer M, Deutschman CS, Seymour CW, et al. The Third International
+#' Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). JAMA.
+#' 2016;315(8):801–810. doi:10.1001/jama.2016.0287
+#'
+#' @rdname label_si
+#' @export
+#'
+susp_inf_abx <- function(..., abx_count_win = hours(24L), abx_min_count = 2L,
+                         by_ref = TRUE, keep_components = FALSE,
+                         interval = NULL) {
+
+  abx_count_win <- as_interval(abx_count_win)
+
+  assert_that(is.count(abx_min_count), is.flag(by_ref),
+              is.flag(keep_components))
+
+  # Extract only the "abx" data from ... (handles extra args from parent callbacks)
+  dots <- list(...)
+  
+  abx_data <- if ("abx" %in% names(dots)) {
+    dots[["abx"]]
+  } else if (length(dots) >= 1L && is_ts_tbl(dots[[1L]])) {
+    dots[[1L]]
+  } else {
+    stop_ricu("susp_inf_abx requires 'abx' data")
+  }
+
+  if (!isTRUE(by_ref)) {
+    abx_data <- copy(abx_data)
+  }
+
+  abx <- si_abx(abx_data, abx_count_win, abx_min_count)
+
+  # Filter to rows where abx criterion is met
+  abx <- abx[is_true(get("abx")), ]
+
+  if (keep_components && nrow(abx) > 0L) {
+    # Store index_var result before using in data.table expression
+    # to avoid name collision with "abx" column
+    idx_col <- index_var(abx)
+    abx <- abx[, c("abx_time") := get(idx_col)]
+  }
+
+  # Rename abx column to susp_inf_abx to match concept name
+  abx <- rename_cols(abx, "susp_inf_abx", "abx", by_ref = TRUE)
+
+  abx
+}
+
+#' Sepsis-3 (antibiotics-only alternative)
+#'
+#' Alternative Sepsis-3 definition using antibiotics-only suspected infection.
+#' This is useful for datasets lacking microbiology/sampling data.
+#'
+#' @inheritParams sep3
+#'
+#' @details This function implements the same SOFA-based Sepsis-3 criterion
+#' as [sep3()], but uses [susp_inf_abx()] for the suspected infection
+#' component instead of [susp_inf()]. This allows computation of a sepsis
+#' label for datasets without microbiology sampling data.
+#'
+#' @seealso [sep3()], [susp_inf_abx()]
+#'
+#' @rdname label_sep3
+#' @export
+#'
+sep3_alt <- function(..., si_window = c("first", "last", "any"),
+                     delta_fun = delta_cummin, sofa_thresh = 2L,
+                     si_lwr = hours(48L), si_upr = hours(24L),
+                     keep_components = FALSE, interval = NULL) {
+
+  cnc <- c("sofa", "susp_inf_abx")
+  res <- collect_dots(cnc, interval, ...)
+
+  assert_that(is.count(sofa_thresh), is.flag(keep_components),
+              not_null(delta_fun))
+
+  si_lwr <- as_interval(si_lwr)
+  si_upr <- as_interval(si_upr)
+
+  delta_fun <- str_to_fun(delta_fun)
+  si_window <- match.arg(si_window)
+
+  sofa <- res[["sofa"]]
+  susp <- res[["susp_inf_abx"]]
+
+  id <- id_vars(sofa)
+  ind <- index_var(sofa)
+  susp_ind <- index_var(susp)
+
+  sus_cols <- setdiff(data_vars(susp), "susp_inf_abx")
+
+  sofa <- sofa[, c("join_time1", "join_time2") := list(
+    get(ind), get(ind)
+  )]
+
+  on.exit(rm_cols(sofa, c("join_time1", "join_time2"), by_ref = TRUE))
+
+  # Use explicit column access for filtering
+  susp <- susp[susp[[susp_ind]] >= hours(0L) & susp[["susp_inf_abx"]] == TRUE, ]
+  susp <- susp[, c("susp_inf_abx") := NULL]
+  
+  # Handle empty susp case
+  if (nrow(susp) == 0L) {
+    # Return empty result with correct structure
+    res <- sofa[0L, ]
+    res <- res[, c("sep3_alt") := logical(0L)]
+    res <- rm_cols(res, c("join_time1", "join_time2", "sofa"), 
+                   skip_absent = TRUE, by_ref = TRUE)
+    return(res)
+  }
+
+  susp <- susp[, c("si_lwr", "si_upr") := list(
+    get(susp_ind) - si_lwr,
+    get(susp_ind) + si_upr
+  )]
+
+  if (si_window %in%  c("first", "last")) {
+    susp <- dt_gforce(susp, si_window, id)
+  }
+
+  join_clause <- c(id, "join_time1 >= si_lwr", "join_time2 <= si_upr")
+
+  res <- sofa[susp,
+    c(list(delta_sofa = delta_fun(get("sofa"))), mget(c(ind, sus_cols))),
+    on = join_clause, by = .EACHI, nomatch = NULL]
+
+  res <- res[is_true(get("delta_sofa") >= sofa_thresh), ]
+
+  cols_rm <- c("join_time1", "join_time2")
+
+  if (!keep_components) {
+    cols_rm <- c(cols_rm, "delta_sofa", "abx_time")
+  }
+
+  res <- rm_cols(res, cols_rm, skip_absent = TRUE, by_ref = TRUE)
+  res <- res[, head(.SD, n = 1L), by = c(id_vars(res))]
+  res <- res[, c("sep3_alt") := TRUE]
+
+  res
+}

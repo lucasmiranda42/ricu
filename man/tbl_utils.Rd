@@ -119,7 +119,7 @@ columns to the front.}
 
 \item{val}{Replacement value (if \code{type} is \code{"const"})}
 
-\item{type}{ character, one of \emph{"const"}, \emph{"locf"} or \emph{"nocb"}. Defaults to \code{"const"}. }
+\item{type}{ Character, one of \emph{"const"}, \emph{"locf"} or \emph{"nocb"}. Defaults to \code{"const"}. }
 }
 \value{
 Most of the utility functions return an object inheriting from

@@ -11,6 +11,7 @@
 \alias{vaso_ind}
 \alias{supp_o2}
 \alias{avpu}
+\alias{surg_flag}
 \alias{bmi}
 \alias{norepi_equiv}
 \title{Concept callback functions}
@@ -57,6 +58,8 @@ vaso_ind(..., interval = NULL)
 supp_o2(..., interval = NULL)
 
 avpu(..., interval = NULL)
+
+surg_flag(..., interval = NULL)
 
 bmi(..., interval = NULL)
 

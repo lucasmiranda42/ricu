@@ -2,6 +2,7 @@
 % Please edit documentation in R/callback-sep3.R
 \name{susp_inf}
 \alias{susp_inf}
+\alias{susp_inf_abx}
 \title{Suspicion of infection label}
 \usage{
 susp_inf(
@@ -16,14 +17,23 @@ susp_inf(
   keep_components = FALSE,
   interval = NULL
 )
+
+susp_inf_abx(
+  ...,
+  abx_count_win = hours(24L),
+  abx_min_count = 2L,
+  by_ref = TRUE,
+  keep_components = FALSE,
+  interval = NULL
+)
 }
 \arguments{
-\item{...}{Data and further arguments are passed to \code{si_calc()}}
+\item{...}{Data objects}
 
-\item{abx_count_win}{Time span during which to apply the \code{abx_min_count}
-criterion}
+\item{abx_count_win}{Time span during which to count antibiotic
+administrations}
 
-\item{abx_min_count}{Minimal number of antibiotic administrations}
+\item{abx_min_count}{Minimal number of antibiotic administrations required}
 
 \item{positive_cultures}{Logical flag indicating whether to require
 cultures to be positive}
@@ -37,15 +47,18 @@ occur}
 
 \item{by_ref}{Logical flag indicating whether to process data by reference}
 
-\item{keep_components}{Logical flag indicating whether to return the
-individual components alongside the aggregated score}
+\item{keep_components}{Logical flag indicating whether to return time
+components}
 
-\item{interval}{Time series interval (only used for checking consistency
-of input data)}
+\item{interval}{Time series interval (only used for checking consistency)}
 }
 \description{
 Suspected infection is defined as co-occurrence of of antibiotic treatment
 and body-fluid sampling.
+
+Alternative definition of suspected infection based solely on antibiotic
+administration. This is useful for datasets lacking microbiology/sampling
+data (e.g., HiRID, SIC).
 }
 \details{
 Suspected infection can occur in one of the two following ways:
@@ -87,6 +100,14 @@ alternative definition of suspected infection is required. For this, we use
 administration of multiple antibiotics (argument \code{abx_min_count} determines
 the required number) within \code{abx_count_win} hours. The first time of
 antibiotic administration is taken as the SI time in this case.
+
+Suspected infection is defined as administration of at least
+\code{abx_min_count} (default: 2) antibiotics within \code{abx_count_win} hours
+(default: 24). The first antibiotic administration time is taken as the
+suspected infection (SI) time.
+
+This alternative definition is used when body fluid sampling data is not
+available in the dataset.
 }
 \references{
 Singer M, Deutschman CS, Seymour CW, et al. The Third International
@@ -97,4 +118,8 @@ Seymour CW, Liu VX, Iwashyna TJ, et al. Assessment of Clinical Criteria for
 Sepsis: For the Third International Consensus Definitions for Sepsis and
 Septic Shock (Sepsis-3). JAMA. 2016;315(8):762–774.
 doi:10.1001/jama.2016.0288
+
+Singer M, Deutschman CS, Seymour CW, et al. The Third International
+Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). JAMA.
+2016;315(8):801–810. doi:10.1001/jama.2016.0287
 }

@@ -766,6 +766,144 @@ aumc_bxs <- function(x, val_var, dir_var, ...) {
 
 aumc_rass <- function(x) as.integer(substr(x, 1L, 2L))
 
+#' SIC death callback
+#' 
+#' In SIC, death is indicated by dischargestate == 2215 ("verstorben")
+#' @param x Data table with val_var column
+#' @param val_var Column containing dischargestate
+#' @param ... Additional arguments (unused)
+#' @return Data table with val_var set to TRUE/FALSE
+sic_death <- function(x, val_var, ...) {
+  # 2215 = "verstorben" (deceased)
+  x <- x[, c(val_var) := is_true(get(val_var) == 2215L)]
+  x
+}
+
+#' Generic helper for MIMIC-style ICU death computation
+#' 
+#' ICU death = death occurred during ICU stay (deathtime <= outtime)
+#' This requires joining icustays (for outtime) with admissions (for deathtime)
+#' 
+#' @param x Data loaded from icustays table
+#' @param val_var Value variable to set with death_icu result
+#' @param icu_tbl Raw icustays data.table from source
+#' @param adm_tbl Raw admissions data.table from source
+#' @param icu_id_col Name of ICU stay ID column (e.g., "icustay_id" or "stay_id")
+#' @return Data table with val_var set to TRUE/FALSE for ICU death
+mimic_death_icu_generic <- function(x, val_var, icu_tbl, adm_tbl, icu_id_col) {
+  
+  # Normalize column names to lowercase (handles both MIMIC III UPPERCASE and MIIV lowercase)
+  # Only rename columns that differ in case to avoid "duplicate elements" error
+  icu_names <- names(icu_tbl)
+  icu_lower <- tolower(icu_names)
+  icu_rename_idx <- which(icu_names != icu_lower)
+  if (length(icu_rename_idx) > 0L) {
+    setnames(icu_tbl, icu_names[icu_rename_idx], icu_lower[icu_rename_idx])
+  }
+  
+  adm_names <- names(adm_tbl)
+  adm_lower <- tolower(adm_names)
+  adm_rename_idx <- which(adm_names != adm_lower)
+  if (length(adm_rename_idx) > 0L) {
+    setnames(adm_tbl, adm_names[adm_rename_idx], adm_lower[adm_rename_idx])
+  }
+  
+  # Get columns needed for the join and comparison
+  icu_cols <- c(icu_id_col, "hadm_id", "outtime")
+  adm_cols <- c("hadm_id", "deathtime")
+  
+  icu_sub <- icu_tbl[, icu_cols, with = FALSE]
+  adm_sub <- adm_tbl[, adm_cols, with = FALSE]
+  
+  # Merge icustays with admissions on hadm_id
+  merged <- merge(icu_sub, adm_sub, by = "hadm_id", all.x = TRUE)
+  
+  # ICU death = patient died AND death time <= ICU discharge time
+  merged[, death_icu := is_true(!is.na(deathtime) & deathtime <= outtime)]
+  
+  # Get result with just ID and death flag
+  result <- merged[, c(icu_id_col, "death_icu"), with = FALSE]
+  
+  # Merge back with input data
+  x_id <- id_vars(x)[1L]
+  if (x_id != icu_id_col) {
+    setnames(result, icu_id_col, x_id)
+  }
+  
+  x <- merge(x, result, by = x_id, all.x = TRUE)
+  x[, c(val_var) := death_icu]
+  x[, death_icu := NULL]
+  
+  x
+}
+
+#' MIMIC III ICU death callback
+#' 
+#' ICU death = death occurred during ICU stay (deathtime <= outtime)
+#' @param x Data loaded from icustays table
+#' @param val_var Value variable to set
+#' @param ... Additional arguments (unused)
+#' @return Data table with val_var set to TRUE/FALSE
+mimic_death_icu <- function(x, val_var, ...) {
+  mimic_death_icu_generic(
+    x, val_var,
+    as.data.table(mimic$icustays),
+    as.data.table(mimic$admissions),
+    "icustay_id"
+  )
+}
+
+#' MIMIC III demo ICU death callback
+#' 
+#' Same as mimic_death_icu but for demo dataset
+#' @param x Data loaded from icustays table
+#' @param val_var Value variable to set
+#' @param ... Additional arguments (unused)
+#' @return Data table with val_var set to TRUE/FALSE
+mimic_demo_death_icu <- function(x, val_var, ...) {
+  mimic_death_icu_generic(
+    x, val_var,
+    as.data.table(mimic_demo$icustays),
+    as.data.table(mimic_demo$admissions),
+    "icustay_id"
+  )
+}
+
+#' MIMIC IV ICU death callback
+#' 
+#' ICU death = death occurred during ICU stay (deathtime <= outtime)
+#' MIIV uses stay_id instead of icustay_id
+#' @param x Data loaded from icustays table
+#' @param val_var Value variable to set
+#' @param ... Additional arguments (unused)
+#' @return Data table with val_var set to TRUE/FALSE
+miiv_death_icu <- function(x, val_var, ...) {
+  mimic_death_icu_generic(
+    x, val_var,
+    as.data.table(miiv$icustays),
+    as.data.table(miiv$admissions),
+    "stay_id"
+  )
+}
+
+#' AUMC ICU death callback
+#' 
+#' ICU death = death time <= ICU discharge time
+#' In AUMC, dateofdeath and dischargedat are both in admissions table
+#' The concept definition uses dateofdeath as index_var and dischargedat as val_var
+#' Both are converted to difftime relative to ICU admission
+#' @param x Data from admissions with dateofdeath as index, dischargedat as val
+#' @param val_var Column containing dischargedat (ICU discharge time)
+#' @param ... Additional arguments (unused)
+#' @return Data table with val_var set to TRUE/FALSE
+aumc_death_icu <- function(x, val_var, ...) {
+  idx <- index_var(x)  # dateofdeath (relative to admission)
+  # val_var contains dischargedat (ICU discharge time, also relative)
+  # ICU death = death time exists AND death time <= ICU discharge time
+  x[, c(val_var) := is_true(get(idx) <= get(val_var))]
+  x
+}
+
 dex_to_10 <- function(id, factor) {
 
   assert_that(same_length(id, factor))

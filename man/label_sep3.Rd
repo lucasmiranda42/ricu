@@ -5,6 +5,7 @@
 \alias{delta_cummin}
 \alias{delta_start}
 \alias{delta_min}
+\alias{sep3_alt}
 \title{Sepsis 3 label}
 \usage{
 sep3(
@@ -23,6 +24,17 @@ delta_cummin(x)
 delta_start(x)
 
 delta_min(x, shifts = seq.int(0L, 23L))
+
+sep3_alt(
+  ...,
+  si_window = c("first", "last", "any"),
+  delta_fun = delta_cummin,
+  sofa_thresh = 2L,
+  si_lwr = hours(48L),
+  si_upr = hours(24L),
+  keep_components = FALSE,
+  interval = NULL
+)
 }
 \arguments{
 \item{...}{Data objects}
@@ -50,12 +62,98 @@ which \code{\link[base:Extremes]{base::pmin()}} is evaluated}
 \description{
 The sepsis 3 label consists of a suspected infection combined with an acute
 increase in SOFA score.
+
+Alternative Sepsis-3 definition using antibiotics-only suspected infection.
+This is useful for datasets lacking microbiology/sampling data.
 }
 \details{
 The Sepsis-3 Consensus (Singer et. al.) defines sepsis as an acute
 increase in the SOFA score (see \code{\link[=sofa_score]{sofa_score()}}) of 2 points or more within
 the suspected infection (SI) window (see \code{\link[=susp_inf]{susp_inf()}}):
-\figure{sofa-sep-3-1.png}
+
+\if{html}{\out{<div class="sourceCode {tikz}">}}\preformatted{#| sofa-sep-3,
+#| echo = FALSE,
+#| engine.opts = list(
+#|   extra.preamble = c(
+#|     "\\\\usepackage\{pgfplots\}", "\\\\pgfplotsset\{compat=newest\}"
+#|   )
+#| )
+
+\\begin\{tikzpicture\}
+
+  \\draw (-5.5, 0) -- (3.5, 0);
+  \\draw (-5.5, -0.2) -- (-5.5, 0.2);
+  \\draw (3.5, -0.2) -- (3.5, 0.2);
+  \\draw (0.5, -0.2) -- (0.5, 0.2);
+
+  \\node[align = center] at (0.5, 0.5) \{SI time\};
+  \\node[align = center] at (3.5, 0.5) \{SI window end\};
+  \\node[align = center] at (-5.5, -0.5) \{SI window start\};
+
+  \\draw (-1.5, -0.2) -- (-1.5, 0.2);
+  \\draw[dashed] (-1.5, 2) -- (-1.5, 0);
+  \\node[align = center] at (-1.5, -0.5) \{Sepsis-3 time\};
+
+  \\node[align = center] at (-2.75, 0.5) \{-48 hours\};
+  \\node[align = center] at (2, -0.5) \{24 hours\};
+
+  \\draw[dashed] (0.5, 0) -- (0.5, -1);
+
+  \\draw (0.5, -1) -- (3.5, -1);
+  \\draw (3.5, -1.2) -- (3.5, -0.8);
+  \\draw (0.5, -1.2) -- (0.5, -0.8);
+
+  \\node at (5.25, -1) \{within 24 hours\};
+
+  \\node[align = center] at (0.5, -1.5) \{ABX\};
+  \\node[align = center] at (3.5, -1.5) \{Sampling\};
+
+  \\draw (0.5, -2) -- (9.5, -2);
+  \\draw (9.5, -2.2) -- (9.5, -1.8);
+  \\draw (0.5, -2.2) -- (0.5, -1.8);
+
+  \\node[align = center] at (5.25, -2.5) \{within 72 hours\};
+
+  \\node[align = center] at (0.5, -2.5) \{Sampling\};
+  \\node[align = center] at (9.5, -2.5) \{ABX\};
+
+  \\draw [decorate, decoration = \{brace, mirror, amplitude=5pt, raise=4pt\},
+         yshift=0pt] (0, -0.9) -- (0, -2.1);
+  \\node at (-3, -1.5) \{Either option is permissible\};
+
+  \\filldraw  (-6, 1.5) circle (1pt);
+  \\draw (-6, 1.5) -- (-5.5, 1.5);
+  \\filldraw (-5.5, 1.5) circle (1pt);
+  \\draw (-5.5, 1.5) -- (-5, 1);
+  \\filldraw (-5, 1) circle (1pt);
+  \\draw (-5, 1) -- (-4.5, 1);
+  \\filldraw (-4.5, 1) circle (1pt);
+  \\draw (-4.5, 1) -- (-4, 1);
+  \\filldraw (-4, 1) circle (1pt);
+  \\draw (-4, 1) -- (-3.5, 1);
+  \\filldraw (-3.5, 1) circle (1pt);
+  \\draw (-3.5, 1) -- (-3, 1.5);
+  \\filldraw (-3, 1.5) circle (1pt);
+  \\draw (-3, 1.5) -- (-2.5, 1.5);
+  \\filldraw (-2.5, 1.5) circle (1pt);
+  \\draw (-2.5, 1.5) -- (-2, 1.5);
+  \\filldraw (-2, 1.5) circle (1pt);
+  \\draw (-2, 1.5) -- (-1.5, 2.0);
+  \\filldraw (-1.5, 2.0) circle (1pt);
+
+  \\draw [decorate, decoration = \{brace, amplitude=5pt, mirror, raise=4pt\},
+         yshift=0pt] (-1.25, 1) -- (-1.25, 2);
+  \\node [black] at (0.25, 1.5) \{$\\Delta$SOFA $\\geq 2$\};
+
+  \\draw (-6.5, 1) -- (-6.5, 2.5);
+  \\node at (-6.5, 3) \{SOFA\};
+  \\draw (-6.5, 1) -- (-6.6, 1) node[left]\{0\};
+  \\draw (-6.5, 1.5) -- (-6.6, 1.5) node[left]\{1\};
+  \\draw (-6.5, 2) -- (-6.6, 2) node[left]\{2\};
+  \\draw (-6.5, 2.5) -- (-6.6, 2.5) node[left]\{3\};
+
+\\end\{tikzpicture\}
+}\if{html}{\out{</div>}}
 
 A patient can potentially have multiple SI windows. The argument
 \code{si_window} is used to control which SI window we focus on (options are
@@ -70,9 +168,17 @@ looking for an increase with respect to the start of the SI window, then
 the \code{delta_start} function should be used. Lastly, the increase might be
 defined with respect to values of the previous 24 hours, in which case the
 \code{delta_min} function is used.
+
+This function implements the same SOFA-based Sepsis-3 criterion
+as \code{\link[=sep3]{sep3()}}, but uses \code{\link[=susp_inf_abx]{susp_inf_abx()}} for the suspected infection
+component instead of \code{\link[=susp_inf]{susp_inf()}}. This allows computation of a sepsis
+label for datasets without microbiology sampling data.
 }
 \references{
 Singer M, Deutschman CS, Seymour CW, et al. The Third International
 Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). JAMA.
 2016;315(8):801–810. doi:10.1001/jama.2016.0287
+}
+\seealso{
+\code{\link[=sep3]{sep3()}}, \code{\link[=susp_inf_abx]{susp_inf_abx()}}
 }

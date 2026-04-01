@@ -63,7 +63,7 @@ reference}
 
 \item{dur_var}{Column name of the duration column}
 
-\item{keep.rownames}{Default is \code{FALSE}. If \code{TRUE}, adds the input object's names as a separate column named \code{"rn"}. \code{keep.rownames = "id"} names the column \code{"id"} instead.}
+\item{keep.rownames}{Default is \code{FALSE}. If \code{TRUE}, adds the input object's names as a separate column named \code{"rn"}. \code{keep.rownames = "id"} names the column \code{"id"} instead. For lists and when calling \code{data.table()}, names from the first named vector are extracted and used as row names, similar to \code{data.frame()} behavior.}
 
 \item{row.names}{\code{NULL} or a character vector giving the row
     names for the data frame.  Missing values are not allowed.}

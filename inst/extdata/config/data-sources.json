@@ -9595,7 +9595,7 @@
         "files": "cases.csv.gz",
         "defaults": {
           "index_var": "icuoffset",
-          "time_vars": ["icuoffset", "offsetofdeath", "heartsurgerybeginoffset", "heartsurgeryendoffset", "offsetafterfirstadmission"]
+          "time_vars": ["icuoffset", "offsetofdeath", "heartsurgerybeginoffset", "heartsurgeryendoffset", "offsetafterfirstadmission", "timeofstay"]
         },
         "num_rows": 27350,
         "cols": {
